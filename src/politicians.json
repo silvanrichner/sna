@@ -1,0 +1,20 @@
+/**
+ * Created by Irina on 20.11.2017.
+ */
+
+//"Student project to measure the reach of swiss politicians in the parliament and the parties as a whole on Twitter",
+//swissPoliticiansList
+{
+  "politicians": [
+    {
+      "name": "Georg",
+      "twittername": "blabla",
+      "partei": "SVP"
+    },
+    {
+      "name": "Georg",
+      "twittername": "blabla",
+      "partei": "SVP"
+    }
+  ]
+}
