@@ -7,14 +7,54 @@
 {
   "politicians": [
     {
-      "name": "Georg",
-      "twittername": "blabla",
+      "name": "Maximilian Reimann",
+      "twittername": "@maximilian_rei",
       "partei": "SVP"
     },
     {
-      "name": "Georg",
-      "twittername": "blabla",
+      "name": "Yves Nidegger",
+      "twittername": "@YvesNidegger",
       "partei": "SVP"
+    },
+    {
+      "name": "Hansjörg Knecht",
+      "twittername": "@HansjoergKnecht",
+      "partei": "SVP"
+    },
+    {
+      "name": "Thomas Hardegger",
+      "twittername": "@th_hardegger",
+      "partei": "SP"
+    },
+    {
+      "name": "Kathrin Bertschy",
+      "twittername": "@kathrinbertschy",
+      "partei": "GLP"
+    },
+    {
+      "name": "Christian Luscher",
+      "twittername": "@CLuscher",
+      "partei": "FDP"
+    },
+    {
+      "name": "Adèle Thorens",
+      "twittername": "@adelethorens",
+      "partei": "Grüne"
+    },
+    {
+      "name": "Claudia Friedl",
+      "twittername": "@claufriedl",
+      "partei": "SP"
+    },
+    {
+      "name": "Chantal Galladé",
+      "twittername": "@ChantalGallade",
+      "partei": "SP"
+    },
+    {
+      "name": "Barbara Gysi",
+      "twittername": "@BaGysi",
+      "partei": "SP"
     }
   ]
 }
