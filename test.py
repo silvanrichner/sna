@@ -6,36 +6,21 @@ mua = MultiUserAPI()
 
 json_object = json.load(open('politicians.json'))
 
-parteifollowercount = 0;
-politikerfollowercount = 0;
-retweetfollowercount = 0;
-politicians_count = 0;
-
 partei = dict()
-partei_follower = dict()
-
 
 politician_followers = set()
 
+data = {}
 #Iterate over the politicians
 for politician in json_object['politicians']:
-    #count the politicians
-    politicians_count += 1;
-
-    #count politicians in the different parteien
-    #and initiate partei follower dict with politician
-    if politician['partei'] in partei:
-        partei[politician['partei']] += 1
-        partei_follower[politician['partie']] += 1
-    else:
-        partei[politician['partei']] = 1
-        partei_follower[politician['partie']] = 1
 
     print(politician['twittername'])
 
     user = mua.getAPI().GetUser(screen_name=politician['twittername'])
-    politikerfollowercount += user.followers_count;
-    print("politikerfolllowercount: " + str(politikerfollowercount))
+    followers = mua.getAPI().GetFollowers(user)
+    #add direct follower to reachlist
+    for follower in followers:
+        politician_followers.add(follower.id)
 
     user_timeline = mua.getAPI().GetUserTimeline(user.id, include_rts=True)
 
@@ -43,23 +28,21 @@ for politician in json_object['politicians']:
         retweets = mua.getAPI().GetRetweets(status.id)
 
         for retweet in retweets:
-            retweetfollowercount += mua.getAPI().GetUser(retweet.user.id).followers_count
-            print("retweeter followercount: " + str(retweetfollowercount))
-            politikerfollowercount += retweetfollowercount
-
-    print("politikerfollowercount und retweeter followercount --> politiker erreicht: " + str(politikerfollowercount) + " Follower")
-
-    #add politician followercount and retweeter followercount to parteifollowers
-    partei_follower[politician['partie']] += politikerfollowercount
+            retweetfollowers = mua.getAPI().GetFollowers(retweet.user.id)
+            #add retweet follower to reachlist
+            for retweetfollower in retweetfollowers:
+                politician_followers.add(retweetfollower.id)
 
 
+
+    #data["partei"] = politician['partei']
+    #data["politiker"]["name"] = politician['name']
+    #data["politiker"]["twittername"] = politician['twittername']
+    #data['politiker']['reach'] = politician_followers.length
 
 
 for key, value in partei.items():
     print(key + " : " + str(value))
-
-for key, value in partei_follower():
-    print(key + " erreicht: " + value + " Twitternutzer")
 
 #test connection
 #print(api.VerifyCredentials())
@@ -75,5 +58,5 @@ for key, value in partei_follower():
 #print(rate_limit_status)
 
 
-for x in range(1, 50):
-    print(mua.getAPI().VerifyCredentials())
+#for x in range(1, 50):
+#    print(mua.getAPI().VerifyCredentials())
