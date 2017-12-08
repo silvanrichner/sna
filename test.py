@@ -6,16 +6,20 @@ mua = MultiUserAPI()
 
 json_object = json.load(open('politicians.json'))
 
+#partei : countPolitician
 partei = dict()
 
+#reachlist every followerId only once
 politician_followers = set()
 
-data = {}
+#json object
+data = {'parteien' : []}
+
 #Iterate over the politicians
 for politician in json_object['politicians']:
 
-    print(politician['twittername'])
 
+    print(politician['twittername'])
     user = mua.getAPI().GetUser(screen_name=politician['twittername'])
     followers = mua.getAPI().GetFollowers(user)
     #add direct follower to reachlist
@@ -28,17 +32,23 @@ for politician in json_object['politicians']:
         retweets = mua.getAPI().GetRetweets(status.id)
 
         for retweet in retweets:
-            retweetfollowers = mua.getAPI().GetFollowers(retweet.user.id)
+            retweetfollowers = mua.getAPI().GetFollowerIDs(retweet.user.id)
             #add retweet follower to reachlist
-            for retweetfollower in retweetfollowers:
-                politician_followers.add(retweetfollower.id)
+            for retweetfollowerid in retweetfollowers:
+                politician_followers.add(retweetfollowerid)
 
+    json_politician = {'name' : politician['name'], 'twittername' : politician['twittername'], 'reach' : len(politician_followers)}
+    politician_followers.clear()
+    print(json_politician)
+print(data)
 
 
     #data["partei"] = politician['partei']
     #data["politiker"]["name"] = politician['name']
     #data["politiker"]["twittername"] = politician['twittername']
     #data['politiker']['reach'] = politician_followers.length
+
+    #save data
 
 
 for key, value in partei.items():
