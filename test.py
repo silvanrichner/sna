@@ -18,6 +18,11 @@ data = {'parteien' : []}
 #Iterate over the politicians
 for politician in json_object['politicians']:
 
+    #HEEEEELP
+    if politician['partei'] not in data['parteien']:
+        data['parteien'].append({politician['partei']:[]});
+
+    print(data)
 
     print(politician['twittername'])
     user = mua.getAPI().GetUser(screen_name=politician['twittername'])
@@ -38,17 +43,15 @@ for politician in json_object['politicians']:
                 politician_followers.add(retweetfollowerid)
 
     json_politician = {'name' : politician['name'], 'twittername' : politician['twittername'], 'reach' : len(politician_followers)}
-    politician_followers.clear()
     print(json_politician)
+
+
+    #HeEEEElp
+    data['parteien'][politician['partei']].append(json_politician)
+    politician_followers.clear()
+
 print(data)
 
-
-    #data["partei"] = politician['partei']
-    #data["politiker"]["name"] = politician['name']
-    #data["politiker"]["twittername"] = politician['twittername']
-    #data['politiker']['reach'] = politician_followers.length
-
-    #save data
 
 
 for key, value in partei.items():

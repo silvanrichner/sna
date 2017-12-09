@@ -27,8 +27,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="42" column="11" lean-forward="true" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+            <state relative-caret-position="391">
+              <caret line="49" column="66" lean-forward="false" selection-start-line="49" selection-start-column="66" selection-end-line="49" selection-end-column="66" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -573,7 +573,7 @@
       <workItem from="1512386473094" duration="1420000" />
       <workItem from="1512387990800" duration="6414000" />
       <workItem from="1512493024923" duration="2059000" />
-      <workItem from="1512568845456" duration="17341000" />
+      <workItem from="1512568845456" duration="18630000" />
     </task>
     <task id="LOCAL-00001" summary="test loop">
       <created>1512497886873</created>
@@ -603,11 +603,18 @@
       <option name="project" value="LOCAL" />
       <updated>1512657544222</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="write politician infos in dict">
+      <created>1512735444707</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1512735444707</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42347000" />
+    <option name="totallyTimeSpent" value="43636000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -684,7 +691,8 @@
     <MESSAGE value="test loop" />
     <MESSAGE value="Merge branch 'master' of https://github.com/silvanrichner/sna" />
     <MESSAGE value="get reach of each politician" />
-    <option name="LAST_COMMIT_MESSAGE" value="get reach of each politician" />
+    <MESSAGE value="write politician infos in dict" />
+    <option name="LAST_COMMIT_MESSAGE" value="write politician infos in dict" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -834,8 +842,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="42" column="11" lean-forward="true" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+        <state relative-caret-position="391">
+          <caret line="49" column="66" lean-forward="false" selection-start-line="49" selection-start-column="66" selection-end-line="49" selection-end-column="66" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
