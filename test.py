@@ -20,7 +20,7 @@ for politician in json_object['politicians']:
 
     #HEEEEELP
     if politician['partei'] not in data['parteien']:
-        data['parteien'].append({politician['partei']:[]});
+        data['parteien'].append({politician['partei']:{}});
 
     print(data)
 
