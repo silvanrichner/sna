@@ -4,7 +4,7 @@ from MultiUserAPI import MultiUserAPI
 #MultiUserAPI test
 mua = MultiUserAPI()
 
-json_object = json.load(open('politicians.json'))
+json_object = json.load(open("politicians.json"))
 
 #partei : countPolitician
 partei = dict()
@@ -13,19 +13,17 @@ partei = dict()
 politician_followers = set()
 
 #json object
-data = {'parteien' : []}
+data = {"parteien" : {}}
 
 #Iterate over the politicians
-for politician in json_object['politicians']:
+for politician in json_object["politicians"]:
 
     #HEEEEELP
-    if politician['partei'] not in data['parteien']:
-        data['parteien'].append({politician['partei']:{}});
+    if politician["partei"] not in data["parteien"]:
+        data["parteien"].update({politician["partei"]:{}})
 
-    print(data)
-
-    print(politician['twittername'])
-    user = mua.getAPI().GetUser(screen_name=politician['twittername'])
+    print(politician["twittername"])
+    user = mua.getAPI().GetUser(screen_name=politician["twittername"])
     followers = mua.getAPI().GetFollowers(user)
     #add direct follower to reachlist
     for follower in followers:
@@ -42,34 +40,12 @@ for politician in json_object['politicians']:
             for retweetfollowerid in retweetfollowers:
                 politician_followers.add(retweetfollowerid)
 
-    json_politician = {'name' : politician['name'], 'twittername' : politician['twittername'], 'reach' : len(politician_followers)}
-    print(json_politician)
+    json_politician = {"name" : politician["name"], "twittername" : politician["twittername"], "reach" : len(politician_followers)}
 
-
-    #HeEEEElp
-    data['parteien'][politician['partei']].append(json_politician)
+    data["parteien"][politician["partei"]].update(json_politician)
     politician_followers.clear()
 
 print(data)
 
-
-
-for key, value in partei.items():
-    print(key + " : " + str(value))
-
-#test connection
-#print(api.VerifyCredentials())
-
-#Get follower count of user
-#follower_count = api.GetUser(screen_name='_BR_JSA').followers_count
-
-#Get followers (ID) of user
-#followers = api.GetFollowerIDs(screen_name='_BR_JSA')
-#print(followers)
-
-#rate_limit_status = api.CheckRateLimit()
-#print(rate_limit_status)
-
-
-#for x in range(1, 50):
-#    print(mua.getAPI().VerifyCredentials())
+with open('data.txt', 'w') as outfile:
+    json.dump(data, outfile)
