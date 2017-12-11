@@ -15,37 +15,40 @@ politician_followers = set()
 #json object
 data = {"parteien" : {}}
 
-#Iterate over the politicians
-for politician in json_object["politicians"]:
 
-    #HEEEEELP
-    if politician["partei"] not in data["parteien"]:
-        data["parteien"].update({politician["partei"]:{}})
+try:
+    #Iterate over the politicians
+    for politician in json_object["politicians"]:
 
-    print(politician["twittername"])
-    user = mua.getAPI().GetUser(screen_name=politician["twittername"])
-    followers = mua.getAPI().GetFollowers(user)
-    #add direct follower to reachlist
-    for follower in followers:
-        politician_followers.add(follower.id)
+        #HEEEEELP
+        if politician["partei"] not in data["parteien"]:
+            data["parteien"].update({politician["partei"]:{}})
 
-    user_timeline = mua.getAPI().GetUserTimeline(user.id, include_rts=True)
+        print(politician["twittername"])
+        user = mua.getUser(politician["twittername"])
+        followers = mua.getFollowers(user)
+        #add direct follower to reachlist
+        for follower in followers:
+            politician_followers.add(follower.id)
 
-    for status in user_timeline:
-        retweets = mua.getAPI().GetRetweets(status.id)
+        user_timeline = mua.getUserTimeline(user.id)
 
-        for retweet in retweets:
-            retweetfollowers = mua.getAPI().GetFollowerIDs(retweet.user.id)
-            #add retweet follower to reachlist
-            for retweetfollowerid in retweetfollowers:
-                politician_followers.add(retweetfollowerid)
+        for status in user_timeline:
+            retweets = mua.getRetweets(status.id)
 
-    json_politician = {"name" : politician["name"], "twittername" : politician["twittername"], "reach" : len(politician_followers)}
+            for retweet in retweets:
+                retweetfollowers = mua.getFollowerIDs(retweet.user.id)
+                #add retweet follower to reachlist
+                for retweetfollowerid in retweetfollowers:
+                    politician_followers.add(retweetfollowerid)
 
-    data["parteien"][politician["partei"]].update(json_politician)
-    politician_followers.clear()
+        json_politician = {politician["name"]: { "twittername" : politician["twittername"], "reach" : len(politician_followers)}}
 
-print(data)
+        data["parteien"][politician["partei"]].update(json_politician)
+        print(data)
+        politician_followers.clear()
+finally:
+    print(data)
 
-with open('data.txt', 'w') as outfile:
-    json.dump(data, outfile)
+    with open('data.txt', 'w') as outfile:
+        json.dump(data, outfile)
