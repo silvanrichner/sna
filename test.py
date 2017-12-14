@@ -4,7 +4,7 @@ from MultiUserAPI import MultiUserAPI
 #MultiUserAPI test
 mua = MultiUserAPI()
 
-json_object = json.load(open("politicians.json"))
+json_object = json.load(open("politicians_p2.json"))
 
 #partei : countPolitician
 partei = dict()

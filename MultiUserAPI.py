@@ -22,6 +22,7 @@ class MultiUserAPI(object):
         try:
             return self.getAPI().GetUser(screen_name = name)
         except:
+            print(sys.exc_info())
             #print("Exception: sleeping...")
             #time.sleep(60)
             self.switchUser()
@@ -41,17 +42,17 @@ class MultiUserAPI(object):
         try:
             return self.getAPI().GetUserTimeline(user_id, include_rts=True)
         except:
-            print(sys.exc_info()[0])
+            print(sys.exc_info())
             # print("Exception: sleeping...")
             # time.sleep(60)
             self.switchUser()
-            return self.getTimeline(user_id)
+            return self.getUserTimeline(user_id)
 
     def getRetweets(self, status_id):
         try:
             return self.getAPI().GetRetweets(status_id)
         except:
-            print(sys.exc_info()[0])
+            print(sys.exc_info())
             # print("Exception: sleeping...")
             # time.sleep(60)
             self.switchUser()
@@ -61,7 +62,7 @@ class MultiUserAPI(object):
         try:
             return self.getAPI().GetFollowerIDs(retweet_user_id)
         except:
-            print(sys.exc_info()[0])
+            print(sys.exc_info())
             # print("Exception: sleeping...")
             # time.sleep(60)
             self.switchUser()
