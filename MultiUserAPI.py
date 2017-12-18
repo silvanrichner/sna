@@ -2,6 +2,7 @@ import twitter
 import json
 import time
 import sys
+import datetime
 
 
 class MultiUserAPI(object):
@@ -13,7 +14,7 @@ class MultiUserAPI(object):
         self.current_token = self.current_token + 1
         if( self.current_token >= len(self.tokens)):
             self.current_token = 0
-            print("sleeping...")
+            print(str(datetime.datetime.now()) + ": sleeping...")
             time.sleep(15*60)
 
         self.api = twitter.Api(consumer_key=self.tokens[self.current_token]['consumer_key'],

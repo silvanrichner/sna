@@ -23,7 +23,7 @@ try:
 
         user = mua.getUser(politician["twittername"])
         print("Get Followers from Politician")
-        followers = mua.getFollowers(user)
+        followers = mua.getFollowerIDs(user)
         #add direct follower to reachlist
         for follower in followers:
             followers_retweets[follower.id] = 0
