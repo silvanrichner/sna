@@ -51,7 +51,7 @@ try:
 
         data["parteien"][politician["partei"]].update(json_politician)
         print(data)
-        politician_followers.clear()
+        followers_retweets.clear()
 finally:
     print(data)
 
