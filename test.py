@@ -12,6 +12,8 @@ partei = dict()
 #reachlist every followerId only once
 politician_followers = set()
 
+followers_retweets = dict();
+
 #json object
 data = {"parteien" : {}}
 
@@ -25,18 +27,23 @@ try:
             data["parteien"].update({politician["partei"]:{}})
 
         print(politician["twittername"])
+
         user = mua.getUser(politician["twittername"])
+        print("Get Followers from Politician")
         followers = mua.getFollowers(user)
         #add direct follower to reachlist
         for follower in followers:
             politician_followers.add(follower.id)
-
+        print("get user timeline from politician")
         user_timeline = mua.getUserTimeline(user.id)
 
         for status in user_timeline:
+            print("get retweets from tweet: " + str(status.id))
             retweets = mua.getRetweets(status.id)
 
             for retweet in retweets:
+                
+                print("get followerid from follower retweet: " + str(retweet.user.id))
                 retweetfollowers = mua.getFollowerIDs(retweet.user.id)
                 #add retweet follower to reachlist
                 for retweetfollowerid in retweetfollowers:
