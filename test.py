@@ -6,9 +6,6 @@ mua = MultiUserAPI()
 
 json_object = json.load(open("politicians_p2.json"))
 
-#partei : countPolitician
-partei = dict()
-
 followers_retweets = dict();
 
 #json object
