@@ -4,7 +4,7 @@ from MultiUserAPI import MultiUserAPI
 #MultiUserAPI test
 mua = MultiUserAPI()
 
-json_object = json.load(open("politicians_p2.json"))
+json_object = json.load(open("politicians.json"))
 
 followers_retweets = dict();
 
@@ -26,7 +26,7 @@ try:
         followers = mua.getFollowerIDs(user)
         #add direct follower to reachlist
         for follower in followers:
-            followers_retweets[follower.id] = 0
+            followers_retweets[follower] = 0
 
         print("get user timeline from politician")
         user_timeline = mua.getUserTimeline(user.id)
@@ -36,13 +36,17 @@ try:
             retweets = mua.getRetweets(status.id)
 
             for retweet in retweets:
+                if(retweet.user.id not in followers_retweets):
+                    followers_retweets[retweet.user.id] = 0
+
                 followers_retweets[retweet.user.id] += 1
 
                 print("get followerid from follower retweet: " + str(retweet.user.id))
                 retweetfollowers = mua.getFollowerIDs(retweet.user.id)
                 #add retweet follower to reachlist
                 for retweetfollowerid in retweetfollowers:
-                    followers_retweets[retweetfollowerid] = 0
+                    if(retweetfollowerid not in followers_retweets):
+                        followers_retweets[retweetfollowerid] = 0
 
         json_politician = {politician["name"]: { "twittername" : politician["twittername"], "reach" : followers_retweets}}
 
