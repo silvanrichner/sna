@@ -1,4 +1,6 @@
 import json
+import copy
+
 from MultiUserAPI import MultiUserAPI
 
 #MultiUserAPI test
@@ -48,7 +50,7 @@ try:
                     if(retweetfollowerid not in followers_retweets):
                         followers_retweets[retweetfollowerid] = 0
 
-        json_politician = {politician["name"]: { "twittername" : politician["twittername"], "reach" : followers_retweets}}
+        json_politician = {politician["name"]: { "twittername" : politician["twittername"], "reach" : copy.deepcopy(followers_retweets)}}
 
         data["parteien"][politician["partei"]].update(json_politician)
         print(data)
