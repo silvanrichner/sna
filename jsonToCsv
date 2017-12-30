@@ -1,7 +1,7 @@
 import json
 import csv
 
-data = json.load(open('data_final.json'))
+data = json.load(open('datafinalmerge2.json'))
 
 
 with open('data.csv', 'w', newline='') as csvfile:
