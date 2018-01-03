@@ -1,5 +1,6 @@
 import json
-import copy
+import sortedcontainers
+import csv
 
 from MultiUserAPI import MultiUserAPI
 
@@ -9,25 +10,36 @@ mua = MultiUserAPI()
 json_object = json.load(open("politicians.json"))
 
 followers_retweets = dict();
+all_nodes = sortedcontainers.SortedList()
 
-#json object
-data = {"parteien" : {}}
+with open('edges.csv', 'w', newline='') as edgecsv, open('nodes.csv', 'w', newline='') as nodecsv:
+    edgewriter = csv.writer(edgecsv, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    nodewriter = csv.writer(nodecsv, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
 
+    #initially iterate once over the politicians to write them into the nodes.csv
+    for politician in json_object["politicians"]:
+        user = mua.getUser(politician["twittername"])
 
-try:
+        #write politician node
+        nodewriter.writerow([user.id, politician["twittername"], politician["name"], politician["partei"], "P"])
+        all_nodes.add(user.id)
+
     #Iterate over the politicians
     for politician in json_object["politicians"]:
-
-        if politician["partei"] not in data["parteien"]:
-            data["parteien"].update({politician["partei"]:{}})
 
         print(politician["twittername"])
 
         user = mua.getUser(politician["twittername"])
+
         print("Get Followers from Politician")
-        followers = mua.getFollowerIDs(user)
+        followers = mua.getFollowerIDs(user.id)
         #add direct follower to reachlist
         for follower in followers:
+            #write follower nodes
+            if follower not in all_nodes:
+                nodewriter.writerow([follower, "", "", "N/A", "F"])
+                all_nodes.add(follower)
+
             followers_retweets[follower] = 0
 
         print("get user timeline from politician")
@@ -48,15 +60,17 @@ try:
                 #add retweet follower to reachlist
                 for retweetfollowerid in retweetfollowers:
                     if(retweetfollowerid not in followers_retweets):
-                        followers_retweets[retweetfollowerid] = 0
+                        #write followerfollower node
+                        if retweetfollowerid not in all_nodes:
+                            nodewriter.writerow([retweetfollowerid, "", "", "N/A", "FF"])
+                            all_nodes.add(retweetfollowerid)
 
-        json_politician = {politician["name"]: { "twittername" : politician["twittername"], "reach" : copy.deepcopy(followers_retweets)}}
+                        #write followerfollower edge
+                        edgewriter.writerow([retweet.user.id, retweetfollowerid, 0])
 
-        data["parteien"][politician["partei"]].update(json_politician)
-        print(data)
+        for followerid in followers_retweets:
+            #write follower edge
+            edgewriter.writerow([user.id, followerid, followers_retweets[followerid]])
+
         followers_retweets.clear()
-finally:
-    print(data)
 
-    with open('data.txt', 'w') as outfile:
-        json.dump(data, outfile)
