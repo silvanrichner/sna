@@ -35,6 +35,7 @@ with open('edges.csv', 'w', newline='') as edgecsv, open('nodes.csv', 'w', newli
         followers = mua.getFollowerIDs(user.id)
         #add direct follower to reachlist
         for follower in followers:
+            edgewriter.writerow([follower, user.id, 0])
             #write follower nodes
             if follower not in all_nodes:
                 nodewriter.writerow([follower, "", "", "N/A", "F"])
